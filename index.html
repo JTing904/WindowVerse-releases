@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WindowVerse</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="WindowVerse turns your real windows into a whole desk of monitors in a cozy 3D room. More screens, no extra monitors. Free for Windows 11.">
+<meta property="og:title" content="WindowVerse - More screens, no extra monitors">
+<meta property="og:description" content="One laptop, one screen? Put your real windows on up to six virtual monitors in a cozy 3D room.">
+<meta property="og:image" content="assets/shot-desk.webp">
+<link rel="icon" href="assets/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&family=Noto+Sans+SC:wght@400;600;700&display=swap">
+<style>
+/* Layout: a night desk scene - dark plum ground lit by one warm lamp glow behind the hero; a phone-shaped frame plays the Reel; sections stack on phones */
+:root {
+  --night: #1E1B22; --deep: #141218; --panel: #221E27; --line: #362F3D;
+  --warm: #E8A04A; --warm-hi: #F6C77A; --plum: #8A5DBF; --cream: #F3E9DC; --muted: #B5A9BA;
+  --display: "Fredoka", "Nunito", "Segoe UI", sans-serif;
+  --body: "Nunito", "Noto Sans SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+:lang(zh) { --display: "Noto Sans SC", "Fredoka", "Microsoft YaHei", sans-serif; --body: "Noto Sans SC", "Nunito", "Microsoft YaHei", sans-serif; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--deep); color: var(--cream); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+a { color: var(--warm-hi); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+/* header */
+header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: rgba(20, 18, 24, .82); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(54, 47, 61, .6); }
+.bar { display: flex; align-items: center; gap: 14px; padding-block: 10px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--cream); font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 20px; }
+.brand img { width: 32px; height: 32px; }
+.spacer { flex: 1; }
+.lang { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.lang button { background: none; border: 0; color: var(--muted); font: 600 13px var(--body); padding: 6px 12px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--line); color: var(--cream); }
+.btn { display: inline-flex; align-items: center; gap: 10px; background: var(--warm); color: #23170a; font-weight: 800; text-decoration: none; border-radius: 14px; padding: 14px 22px; box-shadow: 0 8px 28px rgba(232, 160, 74, .28); transition: transform .15s, box-shadow .15s; }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 12px 34px rgba(232, 160, 74, .38); }
+.btn:focus-visible, .lang button:focus-visible, summary:focus-visible { outline: 3px solid var(--warm-hi); outline-offset: 3px; }
+.btn.small { padding: 8px 14px; border-radius: 10px; font-size: 14px; box-shadow: none; }
+.btn svg { width: 20px; height: 20px; flex: none; }
+/* hero */
+.hero { position: relative; overflow: hidden; }
+.hero::before { content: ""; position: absolute; inset: -20% -10% auto auto; width: 70%; height: 120%; background: radial-gradient(closest-side, rgba(232, 160, 74, .22), rgba(232, 160, 74, 0)); pointer-events: none; }
+.hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center; padding-block: 64px 72px; position: relative; }
+.eyebrow { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--warm); font-weight: 800; }
+h1 { font-family: var(--display); font-weight: 600; font-size: clamp(36px, 6vw, 64px); line-height: 1.06; margin: 12px 0 18px; text-wrap: balance; }
+h1 em { font-style: normal; color: var(--warm-hi); }
+.lead { font-size: clamp(17px, 2.1vw, 20px); color: var(--muted); max-width: 34em; margin: 0 0 28px; }
+.lead b { color: var(--cream); }
+.meta { margin-top: 12px; font-size: 14px; color: var(--muted); }
+.phone { justify-self: center; width: min(330px, 78vw); aspect-ratio: 9 / 16; border-radius: 36px; padding: 10px; background: #0d0b10; box-shadow: 0 30px 80px rgba(0,0,0,.55), 0 0 0 1px #2c2632, inset 0 0 0 1px #2c2632; }
+.phone video, .phone img { width: 100%; height: 100%; object-fit: cover; border-radius: 28px; display: block; background: var(--night); }
+/* sections */
+section.band { padding-block: 72px; border-top: 1px solid rgba(54, 47, 61, .6); }
+h2 { font-family: var(--display); font-weight: 600; font-size: clamp(28px, 4vw, 40px); line-height: 1.15; margin: 0 0 10px; text-wrap: balance; }
+.sub { color: var(--muted); margin: 0 0 36px; max-width: 40em; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.step { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; min-width: 0; }
+.step img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 76%; display: block; }
+.step .txt { padding: 18px 20px 22px; }
+.step .n { font-family: "Fredoka", sans-serif; color: var(--warm); font-weight: 600; font-size: 15px; }
+.step h3 { margin: 4px 0 6px; font-size: 20px; font-family: var(--display); font-weight: 600; }
+.step p { margin: 0; color: var(--muted); font-size: 15.5px; }
+kbd { font: 600 13px "Cascadia Code", Consolas, monospace; background: #2d2734; border: 1px solid #443c4c; border-bottom-width: 2px; border-radius: 6px; padding: 1px 6px; color: var(--cream); white-space: nowrap; }
+.feats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 16px 28px; }
+.feat { display: grid; grid-template-columns: 38px 1fr; gap: 14px; align-items: start; }
+.feat .ic { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; background: rgba(138, 93, 191, .18); color: #CDB2EE; }
+.feat .ic svg { width: 20px; height: 20px; }
+.feat h3 { margin: 4px 0 2px; font-size: 17px; }
+.feat p { margin: 0; color: var(--muted); font-size: 15px; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.split img { width: 100%; max-width: 360px; border-radius: 22px; justify-self: center; box-shadow: 0 20px 60px rgba(0,0,0,.45); }
+.checks { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.checks li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; }
+.checks li::before { content: ""; width: 22px; height: 22px; margin-top: 2px; border-radius: 50%; background: rgba(232, 160, 74, .16) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%23F6C77A' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 15px no-repeat; }
+.req { width: 100%; border-collapse: collapse; font-size: 16px; }
+.req th, .req td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.req th { color: var(--muted); font-weight: 600; width: 38%; }
+.tablebox { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 18px; }
+details { border-bottom: 1px solid var(--line); padding: 16px 4px; }
+summary { cursor: pointer; font-weight: 700; font-size: 18px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--warm); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); margin: 10px 0 0; max-width: 46em; }
+.cta { text-align: center; }
+.cta .btn { margin-top: 8px; }
+footer { border-top: 1px solid rgba(54, 47, 61, .6); padding-block: 36px 48px; color: var(--muted); font-size: 14px; }
+.foot { display: flex; flex-wrap: wrap; gap: 18px 28px; align-items: center; justify-content: space-between; }
+.social { display: flex; gap: 18px; flex-wrap: wrap; }
+.social a { display: inline-flex; align-items: center; gap: 8px; color: var(--cream); text-decoration: none; font-weight: 700; }
+.social img { width: 22px; height: 22px; }
+.credits { margin-top: 18px; max-width: 60em; }
+@media (max-width: 860px) {
+  .hero .wrap { grid-template-columns: 1fr; gap: 36px; padding-block: 40px 56px; text-align: center; }
+  .lead { margin-inline: auto; }
+  .steps { grid-template-columns: 1fr; }
+  .step { grid-template-columns: 40% 1fr; grid-template-rows: none; }
+  .step img { height: 100%; aspect-ratio: auto; }
+  .split { grid-template-columns: 1fr; }
+  .hide-s { display: none; }
+}
+@media (max-width: 460px) { .step { grid-template-columns: 1fr; } .step img { aspect-ratio: 4 / 3; height: auto; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#top"><img src="assets/icon-256.png" alt="" width="32" height="32">WindowVerse</a>
+    <div class="spacer"></div>
+    <div class="lang" role="group" aria-label="Language"><button type="button" id="lang-en" data-lang="en" aria-pressed="true">EN</button><button type="button" id="lang-zh" data-lang="zh" aria-pressed="false">中文</button></div>
+    <a class="btn small hide-s" href="https://github.com/JTing904/WindowVerse-releases/releases/latest" data-k="dl_short">Download</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow" data-k="eyebrow">For laptops with one screen</div>
+        <h1 data-k="h1" data-html>One laptop. One screen.<br><em>Never enough space?</em></h1>
+        <p class="lead" data-k="lead" data-html>WindowVerse puts your <b>real windows</b> on a whole desk of virtual monitors, inside a cozy 3D room. <b>More screens, no extra monitors.</b></p>
+        <a class="btn" href="https://github.com/JTing904/WindowVerse-releases/releases/latest"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 5.5 10.5 4.4v7.2H3V5.5zm0 13 7.5 1.1v-7.1H3v6zm8.4 1.2L21 21v-8.5h-9.6v7.2zm0-15.4v7.3H21V3l-9.6 1.3z"/></svg><span data-k="dl">Download for Windows</span></a>
+        <div class="meta" data-k="meta">Free · Windows 11 · 76 MB installer</div>
+      </div>
+      <div class="phone">
+        <video autoplay muted loop playsinline preload="metadata" poster="assets/reel-poster.webp" aria-label="WindowVerse in action: real windows on three monitors in a 3D room">
+          <source src="assets/reel-loop.webm" type="video/webm"><source src="assets/reel-loop.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="how">
+    <div class="wrap">
+      <h2 data-k="how_h">Three clicks to a bigger desk</h2>
+      <p class="sub" data-k="how_sub">Your windows stay real apps. WindowVerse shows them on monitors in the room, live.</p>
+      <div class="steps">
+        <article class="step"><img src="assets/shot-desk.webp" alt="Three monitors on a desk, each showing a real window" loading="lazy" width="540" height="960"><div class="txt"><div class="n">1</div><h3 data-k="s1_h">Pick a window</h3><p data-k="s1_p">Click an empty screen and choose any open window. It appears on that monitor, live.</p></div></article>
+        <article class="step"><img src="assets/shot-focus.webp" alt="Close-up of a code editor on a monitor" loading="lazy" width="540" height="960"><div class="txt"><div class="n">2</div><h3 data-k="s2_h">Work in it for real</h3><p data-k="s2_p" data-html>Click a screen to fly in and use the app: type, scroll, click. Press <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>F10</kbd> to go back to the room.</p></div></article>
+        <article class="step"><img src="assets/shot-six.webp" alt="Six monitors in two rows, one in portrait" loading="lazy" width="540" height="960"><div class="txt"><div class="n">3</div><h3 data-k="s3_h">Set it up your way</h3><p data-k="s3_p">Landscape, portrait, a curved ultrawide, up to six screens. Windows are fitted to each screen's shape.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <h2 data-k="room_h">A room that feels like yours</h2>
+      <p class="sub" data-k="room_sub">The monitors are the point. The room makes it nice to stay.</p>
+      <div class="feats">
+        <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 11 12 4l9 7v9h-6v-6H9v6H3z"/></svg></div><div><h3 data-k="f1_h">8 rooms, 6 looks</h3><p data-k="f1_p">From a work room to a Japanese room, with morning, day, dusk and night lighting.</p></div></div>
+        <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0-5 1 3h-2zm0 20-1-3h2zM2 12l3-1v2zm20 0-3 1v-2z"/></svg></div><div><h3 data-k="f2_h">Day, night and weather</h3><p data-k="f2_p">The room follows your clock. Rain, snow or fog outside the window, and the seasons change the decorations.</p></div></div>
+        <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2 7 9h3l-4 6h4l-3 5h10l-3-5h4l-4-6h3z"/></svg></div><div><h3 data-k="f3_h">Festivals</h3><p data-k="f3_p">Lunar New Year, Valentine's Day, Mid-Autumn, Halloween and Christmas decorate the room when the day comes.</p></div></div>
+        <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-8 9c0-4 3.6-7 8-7s8 3 8 7z"/></svg></div><div><h3 data-k="f4_h">Your avatar and a figurine</h3><p data-k="f4_p">Stand up, walk around, change outfits, rest on the sofa or the bed. Click the figurine on the desk for a new pose.</p></div></div>
+        <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5 3h11l3 3v15H5zm3 6h8v2H8zm0 4h8v2H8zm0 4h5v2H8z"/></svg></div><div><h3 data-k="f5_h">A guide on the desk</h3><p data-k="f5_p" data-html>Forgot a shortcut? Click the notebook or press <kbd>F1</kbd>.</p></div></div>
+        <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 5h9v2H9.6c.5 1.6 1.4 3 2.5 4.2.7-.8 1.3-1.7 1.7-2.6l1.9.7c-.5 1.2-1.3 2.4-2.2 3.4l2.5 2.3-1.4 1.4-2.5-2.4c-1.6 1.3-3.4 2.2-5.4 2.7l-.6-1.9c1.7-.4 3.2-1.1 4.5-2.2C8 11.2 7 9.2 6.5 7H4zm11.5 6h2l4 10h-2.1l-1-2.6h-3.8l-1 2.6h-2.1zm1 2.6-1.2 3.1h2.4z"/></svg></div><div><h3 data-k="f6_h">English and 中文</h3><p data-k="f6_p">Switch the language any time in Settings.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap split">
+      <div>
+        <h2 data-k="priv_h">Everything stays on your PC</h2>
+        <ul class="checks">
+          <li data-k="p1">Window images are shown on your computer only. Nothing is uploaded or recorded.</li>
+          <li data-k="p2">No account, no sign-in. It works offline.</li>
+          <li data-k="p3">Only the windows you put on a screen are touched. If one is resized to fit a screen, it gets its old size back when you take it off or quit.</li>
+          <li data-k="p4">Uninstall from Windows Settings like any other app.</li>
+        </ul>
+      </div>
+      <img src="assets/shot-figure.webp" alt="A small figurine with a name plate on the desk" loading="lazy" width="540" height="960">
+    </div>
+  </section>
+
+  <section class="band" id="req">
+    <div class="wrap">
+      <h2 data-k="req_h">What you need</h2>
+      <div class="tablebox">
+        <table class="req">
+          <tr><th data-k="r1h">System</th><td data-k="r1">Windows 11</td></tr>
+          <tr><th data-k="r2h">Graphics</th><td data-k="r2">A DirectX 12 graphics card. Tested on a laptop with an NVIDIA GeForce RTX 3050 (smooth at 144 fps); integrated graphics are still being tested.</td></tr>
+          <tr><th data-k="r3h">Memory</th><td data-k="r3">About 1.1 GB while running with three screens</td></tr>
+          <tr><th data-k="r4h">Download</th><td data-k="r4">76 MB installer, no administrator rights needed</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="faq">
+    <div class="wrap">
+      <h2 data-k="faq_h">Questions</h2>
+      <details><summary data-k="q1">Is it free?</summary><p data-k="a1">Yes. WindowVerse is free to download and use.</p></details>
+      <details><summary data-k="q2">Will it change my windows?</summary><p data-k="a2">Your apps keep running normally. WindowVerse only moves or resizes a window when you put it on a screen whose shape is different, and puts it back when you remove it or quit.</p></details>
+      <details><summary data-k="q3">Is my laptop fast enough?</summary><p data-k="a3">A laptop with a dedicated graphics card runs it smoothly. Support for integrated graphics is being tested; try it and see.</p></details>
+      <details><summary data-k="q4">How do I get out of a window?</summary><p data-k="a4" data-html>Press <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>F10</kbd>, or move the mouse to the top edge of the screen and click "Back to room".</p></details>
+      <details><summary data-k="q5">Does it work with a second real monitor?</summary><p data-k="a5">WindowVerse is made for one screen. With a second monitor it still works, but that setup has had less testing.</p></details>
+    </div>
+  </section>
+
+  <section class="band cta">
+    <div class="wrap">
+      <h2 data-k="cta_h">More screens, no extra monitors.</h2>
+      <a class="btn" href="https://github.com/JTing904/WindowVerse-releases/releases/latest"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 5.5 10.5 4.4v7.2H3V5.5zm0 13 7.5 1.1v-7.1H3v6zm8.4 1.2L21 21v-8.5h-9.6v7.2zm0-15.4v7.3H21V3l-9.6 1.3z"/></svg><span data-k="dl">Download for Windows</span></a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <a class="brand" href="#top"><img src="assets/icon-256.png" alt="" width="32" height="32">WindowVerse <span style="color:var(--warm);font-family:var(--body);font-size:15px;font-weight:600">窗界</span></a>
+      <div class="social">
+        <a href="https://www.instagram.com/jtinnnng/" rel="noopener"><img src="assets/instagram.png" alt="">@jtinnnng</a>
+        <a href="https://github.com/JTing904" rel="noopener"><img src="assets/github.png" alt="">JTing904</a>
+      </div>
+    </div>
+    <p class="credits" data-k="credits" data-html>Made with the <a href="https://godotengine.org/" rel="noopener">Godot Engine</a> (MIT). 3D models and textures from <a href="https://polyhaven.com/" rel="noopener">Poly Haven</a> and <a href="https://quaternius.com/" rel="noopener">Quaternius</a> (CC0). Not affiliated with Microsoft. © 2026 WindowVerse.</p>
+  </div>
+</footer>
+
+<script>
+const ZH = {
+  dl_short: "下载", dl: "下载 Windows 版", eyebrow: "给只有一块屏幕的笔电",
+  h1: "一台笔电，一块屏幕。<br><em>总是不够用？</em>",
+  lead: "WindowVerse 把你<b>真实的窗口</b>放到一整桌的虚拟显示器上，就在一个温馨的 3D 房间里。<b>不用买显示器，也能有更多屏幕。</b>",
+  meta: "免费 · Windows 11 · 安装包 76 MB",
+  how_h: "点三下，桌面就变大", how_sub: "窗口还是原来的软件，WindowVerse 把它们实时显示在房间里的显示器上。",
+  s1_h: "选一个窗口", s1_p: "点一块空屏幕，选任何一个开着的窗口，它就实时出现在那块显示器上。",
+  s2_h: "直接在里面工作", s2_p: "点屏幕就飞进去，像平常一样打字、滚动、点击。按 <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>F10</kbd> 回到房间。",
+  s3_h: "按你的习惯摆", s3_p: "横屏、竖屏、曲面带鱼屏，最多 6 块。窗口会自动配合屏幕的形状。",
+  room_h: "像你自己的房间", room_sub: "显示器是重点，房间让你愿意待下来。",
+  f1_h: "8 个房间、6 种风格", f1_p: "从工作室到日式房，还有清晨、白天、黄昏、夜晚的光线。",
+  f2_h: "昼夜和天气", f2_p: "房间跟着你的时间变化。窗外会下雨、下雪、起雾，四季也会换不同的摆设。",
+  f3_h: "节日布置", f3_p: "春节、情人节、中秋、万圣节、圣诞，到了那天，房间也会过节。",
+  f4_h: "你的人物和手办", f4_p: "起来走走、换衣服、到沙发或床上休息。点桌上的手办，换一个造型。",
+  f5_h: "桌上有本说明书", f5_p: "忘了快捷键？点桌上的笔记本，或按 <kbd>F1</kbd>。",
+  f6_h: "中文和 English", f6_p: "随时在设置里切换语言。",
+  priv_h: "一切都留在你的电脑里",
+  p1: "窗口画面只在你的电脑上显示，不上传、不录制。", p2: "不用账号、不用登录，离线也能用。",
+  p3: "只会动你放上屏幕的窗口。如果为了配合屏幕调整了大小，拿下来或退出时会还原。", p4: "和其他软件一样，在 Windows 设置里就能卸载。",
+  req_h: "需要什么", r1h: "系统", r1: "Windows 11", r2h: "显卡",
+  r2: "支持 DirectX 12 的显卡。已在搭载 NVIDIA GeForce RTX 3050 的笔电上测试（流畅 144 帧）；集成显卡还在测试中。",
+  r3h: "内存", r3: "开三块屏幕时约 1.1 GB", r4h: "下载", r4: "安装包 76 MB，不需要管理员权限",
+  faq_h: "常见问题", q1: "要钱吗？", a1: "不用。WindowVerse 免费下载、免费使用。",
+  q2: "会不会改动我的窗口？", a2: "你的软件照常运行。只有把窗口放到形状不同的屏幕上时，WindowVerse 才会移动或调整它的大小；拿下来或退出时会放回原样。",
+  q3: "我的笔电跑得动吗？", a3: "有独立显卡的笔电可以流畅运行。集成显卡的支持还在测试，欢迎试试看。",
+  q4: "怎么从窗口里出来？", a4: "按 <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>F10</kbd>，或把鼠标移到屏幕最上方，点「返回房间」。",
+  q5: "接了第二块真的显示器也能用吗？", a5: "WindowVerse 是为一块屏幕设计的。接第二块显示器也能用，只是这种情况测试得比较少。",
+  cta_h: "不用买显示器，也能有更多屏幕。",
+  credits: "使用 <a href=\"https://godotengine.org/\" rel=\"noopener\">Godot 引擎</a>（MIT）制作。3D 模型和贴图来自 <a href=\"https://polyhaven.com/\" rel=\"noopener\">Poly Haven</a> 和 <a href=\"https://quaternius.com/\" rel=\"noopener\">Quaternius</a>（CC0）。与 Microsoft 无关。© 2026 WindowVerse。"
+};
+const EN = {};
+document.querySelectorAll("[data-k]").forEach(el => { EN[el.dataset.k] = el.hasAttribute("data-html") ? el.innerHTML : el.textContent; });
+function setLang(l) {
+  const t = l === "zh" ? ZH : EN;
+  document.querySelectorAll("[data-k]").forEach(el => { const v = t[el.dataset.k]; if (v === undefined) return; if (el.hasAttribute("data-html")) el.innerHTML = v; else el.textContent = v; });
+  document.documentElement.lang = l === "zh" ? "zh-Hans" : "en";
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
+  try { localStorage.setItem("wv-lang", l); } catch (e) {}
+}
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+let saved = null; try { saved = localStorage.getItem("wv-lang"); } catch (e) {}
+setLang(saved || ((navigator.language || "").toLowerCase().startsWith("zh") ? "zh" : "en"));
+</script>
+</body>
+</html>
